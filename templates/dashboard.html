@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+     <link rel="stylesheet" href="/static/hello.css">
+</head>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<center>
+    <h3>{{ message }}</h3>
+</center>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<body>
+    <center>
+        <h1>Welcome To Dashboard</h1>
+    </center>
+    <div class="navbar">
+        
+        <a href="/home">Home</a>
+        
+        <div class="dropdown">
+            <span class="dropdown-btn">Notes</span>
+            <div class="dropdown-content">
+                <a href="{{url_for('addnotes')}}">AddNotes</a>
+                <a href="{{url_for('viewallnotes')}}">viewallnotes</a>
+                <a href="{{url_for('exceldata')}}">Excel Data</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <span class="dropdown-btn">Files</span>
+            <div class="dropdown-content">
+                <a href="{{url_for('uploadfile')}}">uploadfile</a>
+                <a href="{{url_for('viewallfiles')}}">View All Files</a>
+            </div>
+        </div>
+        <a href="{{url_for('logout')}}">logout</a>
+        <form action="{{ url_for('search') }}" method='POST' class="search-form">
+            <input type="search" name="searcheddata" placeholder="Search" class="search-input" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div class="content">
+        {{session.get('user')}}
+        <h1>Welcome to Your Dashboard </h1>
+    </div>
+</body>
+{% block content%}{%endblock%}
+{% if sdata%}
+<table border="1">
+    <tr>
+        <th>notes_id</th>
+        <th>title</th>
+        <th colspan="3"></th>
+    </tr>
+    {% for i in sdata %}
+    <tr>
+        <td>{{ i[0] }}</td>
+        <td>{{ i[1] }}</td>
+        <td>{{ i[2] }}</td>
+        <td><a href="{{url_for('readnotes',nid=i[0])}}">view</a></td>
+        <td><a href="{{url_for('updatenotes',nid=i[0])}}">update</a></td>
+        <td><a href="{{url_for('deletenotes',nid=i[0])}}">delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endif %}
+</html>

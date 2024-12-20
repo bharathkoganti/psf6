@@ -1,0 +1,15 @@
+
+ {% block addcss %}
+ <link rel="stylesheet" href="/static/hello.css">
+<body>
+    <form method="post" enctype="multipart/form-data">
+        <div class="one">
+            <h1>Upload Files</h1>
+            <label for="">upload file</label>
+            <input type="file" name="file" accept=".jpg,.png,.pdf,.jpeg,.py,.txt,.docx,.doc"> <br>
+            <input type="submit" value="submit">
+        </div>
+    </form>
+    {% endblock %}
+</body>
+</html>
